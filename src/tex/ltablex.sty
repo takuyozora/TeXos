@@ -1,0 +1,96 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ltablex}[1995/11/06 v1.0 Modified tabularx]
+
+\RequirePackage{longtable}[1994/12/08]
+\RequirePackage{tabularx}[1994/02/03]
+
+\newif\ifTX@convertX@
+\TX@convertX@true
+
+\newcommand\keepXColumns{
+  \TX@convertX@false
+}
+
+\newcommand\convertXColumns{
+  \TX@convertX@true
+}
+
+\renewcommand\TX@endtabularx{%
+  \expandafter\TX@newcol\expandafter{\tabularxcolumn{\TX@col@width}}%
+  \let\verb\TX@verb
+  \def\@elt##1{\global\value{##1}\the\value{##1}\relax}%
+  \edef\TX@ckpt{\cl@@ckpt}%
+  \let\@elt\relax
+  \TX@old@table=\maxdimen
+  \TX@col@width=\TX@target
+  \global\TX@cols=\@ne
+  \TX@typeout@
+    {\@spaces Table Width\@spaces Column Width\@spaces X Columns}%
+   
+  %
+  % define \endhead, etc. to be \\ so that in this part
+  % of the process they are just rows
+  %
+  \let\savecaption\caption
+  \def\caption{\\}
+  \let\saveendhead\endhead
+  \def\endhead{\\}
+  \let\saveendfirsthead\endfirsthead
+  \def\endfirsthead{\\}
+  \let\saveendfoot\endfoot
+  \def\endfoot{\\}
+  \let\saveendlastfoot\endlastfoot
+  \def\endlastfoot{\\}
+  %
+  %
+  \ifTX@convertX@
+    \TX@trial{\def\NC@rewrite@X{\NC@find l}}
+    \ifdim\wd\@tempboxa<\TX@target
+      \TX@newcol{l}
+    \else
+      \TX@convertX@false
+    \fi
+  \fi
+
+  \ifTX@convertX@
+    \relax
+  \else
+    \TX@trial{\def\NC@rewrite@X{%
+        \global\advance\TX@cols\@ne\NC@find p{\TX@col@width}}}%
+    \loop
+      \TX@arith
+      \ifTX@
+      \TX@trial{}%
+    \repeat
+  \fi
+  {\let\@footnotetext\TX@ftntext\let\@xfootnotenext\TX@xftntext
+    % we may as well set \LTchunksize to be \maxdimen as the whole
+    % thing is already in memory anyway so we may as well do it in one
+    % chunk. if it is too big for one chunk we are already dead.. 
+    \LTchunksize\maxdimen
+    % 
+    % restore \endhead, etc.
+    %
+    \let\caption\savecaption
+    \let\endhead\saveendhead
+    \let\endfirsthead\saveendfirsthead
+    \let\endfoot\saveendfoot
+    \let\endlastfoot\saveendlastfoot
+    %
+    \expandafter\longtable
+      \the\toks@
+    \endlongtable
+    }%
+  \global\TX@ftn\expandafter{\expandafter}\the\TX@ftn
+  \ifnum0=`{\fi}%
+   \end{tabularx}
+}
+
+
+%
+% activate column width reading from the .aux file
+%
+
+
+\setlongtables
+
