@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from gi.repository import Gtk
 
 class ListView(Gtk.Frame):

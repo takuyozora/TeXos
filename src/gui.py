@@ -866,24 +866,10 @@ class TopPage(Gtk.VBox):
         
        
             
-if __name__ == '__main__':
-    TestProject = project.Project()
-    prempartie = project.Section("Première partie")
-    prempartie.tops.append(project.Top("10"))
-    prempartie.tops.append(project.Top("20"))
-    prempartie.tops.append(project.Top("30"))
-    prempartie.tops.append(project.Top("40"))
-    seconpartie = project.Section("Seconde partie")
-    dernpartie = project.Section("Dernière partie")    
-    TestProject.conduite.sections.append(prempartie)
-    TestProject.conduite.sections.append(seconpartie)
-    TestProject.conduite.sections.append(dernpartie)
-    
-    #tools.Debug(TestProject.conduite.compile_all())
-    #GLib.threads_init()
-    window = WindowTeXos ()
-    window.show_all()
-    Gtk.main()            
+#if __name__ == '__main__':
+#    window = WindowTeXos ()
+#    window.show_all()
+#    Gtk.main()            
              
         
         
