@@ -22,12 +22,12 @@ class LatexCheckThread(threading.Thread):
         self.state = None
         self.end = False
         tools.Debug("Start thread")        
-        name = "/tmp/"+"tmpTop.tex"
+        name = "/tmp/"+"tmpTop.tex" ## WINDOWS : corriger le /tmp
         try:
             while True:
                 tools.Debug(" [thread] Boucle")
                 latex = self.queue.get(timeout=15)
-                with open(name+".tex", "w") as f:  ## WNDOWS : corriger le /tmp
+                with open(name+".tex", "w") as f:  ## WINDOWS : corriger le /tmp
                     f.write(latex)
                 cmd = "/usr/bin/pdflatex -halt-on-error -output-directory=%(dir)s %(name)s.tex" % {"name": name, "dir": "/tmp"}
                 args = shlex.split(cmd)
