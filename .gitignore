@@ -5,3 +5,5 @@ test
 tests
 *__pycache__
 *.pyc
+*~
+*.md
