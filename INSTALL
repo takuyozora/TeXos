@@ -1,0 +1,14 @@
+Dépendances :
+
+	Fedora:
+		* python3
+		* pygobject3
+		* python3-gobject
+		* texlive
+		* texlive-latex
+
+	Ubuntu (12.04):
+		* python3
+		* python3-gi
+		* texlive-base
+		* texlive-latex-extra
