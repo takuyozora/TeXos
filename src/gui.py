@@ -750,9 +750,9 @@ class TopPage(Gtk.VBox):
         self.parent.sectionMenu.update_store()
         
     def on_entryAction_change(self,widget):
+        self.top.action = widget.get_text()
         if self.parent.parent.project.settings.check_latex:
             self.update_state()
-        self.top.action = widget.get_text()
         #self.preview.set_label(self.top.get_latex())
         self.update_preview()
         
