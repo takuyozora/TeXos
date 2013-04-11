@@ -27,6 +27,8 @@ class LatexCheckThread(threading.Thread):
             while True:
                 tools.Debug(" [thread] Boucle")
                 latex = self.queue.get(timeout=15)
+                if self.queue.empty() is not True:
+                    continue
                 with open(name+".tex", "w") as f:  ## WINDOWS : corriger le /tmp
                     f.write(latex)
                 cmd = "/usr/bin/pdflatex -halt-on-error -output-directory=%(dir)s %(name)s.tex" % {"name": name, "dir": "/tmp"}
