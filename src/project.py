@@ -241,6 +241,14 @@ class Top():
     def get_latex(self):
         return latex.transform(self.action)
     
+    def get_latex_preview(self):
+        """ Give a latex preview of what is typing """
+        raw_latex = self.get_latex()
+        text = ""
+        for line in raw_latex:
+            text += line +"\n"
+        return text
+    
     def get_only_top_latex(self):
         return latex.compile_only_top(self)
     

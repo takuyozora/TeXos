@@ -734,7 +734,7 @@ class TopPage(Gtk.VBox):
         
         buttonBox.set_focus_chain([self.buttonRight,buttonLeft])
         
-        self.preview = Gtk.Label(self.top.get_latex())  
+        self.preview = Gtk.Label(self.top.get_latex_preview())  
         
         self.pack_start(labelTop,False,False,0)
         self.pack_start(self.entryTop,False,False,0)
@@ -754,7 +754,7 @@ class TopPage(Gtk.VBox):
             self.update_state()
         self.top.action = widget.get_text()
         #self.preview.set_label(self.top.get_latex())
-        self.preview.show()
+        self.update_preview()
         
     def update_state(self):
         if self.worker is None:
@@ -766,13 +766,13 @@ class TopPage(Gtk.VBox):
                 self.worker.start()
             else:
                 self.worker.append(self.top)
-        
-    def on_entryAction_key_press_event(self,widget,event):
+                
+    def update_preview(self):
+        self.preview.set_text(self.top.get_latex_preview())
+    
+    def syntax_completion(self, widget, event):
         key = Gdk.keyval_name(event.keyval)
-        tools.Debug(key)
-        if key == "Return":
-            self.buttonRight.grab_focus()
-        elif key == "BackSpace": # Remove double accolade parenthèse guillemet ou crochet
+        if key == "BackSpace": # Remove double accolade parenthèse guillemet ou crochet
             buffer = widget.get_buffer()
             text = buffer.get_text()
             char = text[widget.get_position()-1]
@@ -834,9 +834,16 @@ class TopPage(Gtk.VBox):
                     widget.set_position(widget.get_position()+2)
                     return True
                 buffer.insert_text(widget.get_position(),"\"",1)
-        
-                
         return False
+        
+    def on_entryAction_key_press_event(self,widget,event):
+        key = Gdk.keyval_name(event.keyval)
+        tools.Debug(key)
+        if key == "Return":
+            self.buttonRight.grab_focus()
+            return False
+        else:
+            return self.syntax_completion(widget, event)
     
     def on_continue_clicked(self,widget):
         pos = self.section.get_top_pos(self.top)
