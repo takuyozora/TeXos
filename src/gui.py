@@ -260,6 +260,8 @@ class ProjectPage(Gtk.VBox):
             self.init_conduite_menu()
         elif section == "settings":
             self.init_setting_menu()
+        elif section == "help":
+            self.init_help_menu()
         else:
             self.clean_part()
             self.subMenu.show_all()
@@ -274,6 +276,11 @@ class ProjectPage(Gtk.VBox):
     def init_conduite_menu(self):
         self.clean_part()
         self.subMenu.add(ConduiteMenu(project=self.project,screen=self.rightScreenPart))
+        self.subMenu.show_all()
+        
+    def init_help_menu(self):
+        self.clean_part()
+        self.subMenu.add(HelpMenu(project=self.project,screen=self.rightScreenPart))
         self.subMenu.show_all()
         
     def init_setting_menu(self):
@@ -294,7 +301,7 @@ class ProjectMenu(Gtk.VBox):
         self.project = project
         self.on_change = on_change
         
-        self.menu = ListView.ListView("Projet",[["Conduite","conduite"],["Préférences","settings"],["Rendu","show"]],on_select=self.on_select)
+        self.menu = ListView.ListView("Projet",[["Conduite","conduite"],["Préférences","settings"],["Aide","help"]],on_select=self.on_select)
         
         self.pack_start(self.menu,False,False,0)
         
@@ -880,7 +887,35 @@ class TopPage(Gtk.VBox):
     def clean(self):
         tools.cleanBox(self)
         
+class HelpMenu(Gtk.VBox):
+    """
+    Main Help Menu (page)
+    """
+     
+    def __init__(self,project,screen):
+        """
+        Initialize Render menu
+        """
+        Gtk.VBox.__init__(self)
         
+        self.project = project
+        self.screen = screen
+        
+        self.page = Gtk.VBox()
+        
+        menu_list = [["Syntaxe","syntax"]]
+        self.menu = ListView.ListView("Aide",menu_list,on_select=self.on_select)
+        
+        
+        self.pack_start(self.menu,True,True,0)
+        self.show_all()      
+        
+    def on_select(self, select):
+        model , treeiter = select.get_selected()
+        if treeiter != None :
+            #self.on_change(model[ treeiter ][ 1 ])
+            pass
+
        
             
 #if __name__ == '__main__':

@@ -1,14 +1,22 @@
-Dépendances :
+README :: TeXos
 
-	Fedora:
-		* python3
-		* pygobject3
-		* python3-gobject
-		* texlive
-		* texlive-latex
+(Français)
 
-	Ubuntu (12.04):
-		* python3
-		* python3-gi
-		* texlive-base
-		* texlive-latex-extra
+==> Syntaxe
+
+La syntaxe de TeXos est simple, voici un petit tableau récapitulatif :
+
+ Description || TeXos || LaTeX
+ 
+ Submaster n°X			|| (X)	|| \sub{X}
+ Piste n°X				|| [X]	|| \piste{X}
+ Fade In				|| u	|| \up
+ Fade Out				|| d	|| \down
+ Monter rapidement		|| U	|| \Up
+ Descendre rapidement	|| D	|| \Down
+ Faire le noir			|| n	|| \noir
+ Flasher				|| f	|| \flash
+ Flasher en solo		|| s	|| \solo
+ Special **				|| {**}	|| \special{**}
+ Commentaire **			|| "**"	|| \comment{**} 
+ 
