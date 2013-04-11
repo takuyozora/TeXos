@@ -175,6 +175,16 @@ class ProjectPage(Gtk.VBox):
         self.toolbar.insert(self.toolbarItems["compile"],5)
         
     def on_compile_button_clicked(self,widget):
+        if self.project.tmpFile is True:
+            dialog = Gtk.MessageDialog(self.get_ancestor(Gtk.WindowType.TOPLEVEL), 0, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, "Projet non sauvegardé")
+            dialog.format_secondary_text("Le projet n'a pas encore été sauvegardé, voulez vous le faire maintenant ? (dans le cas contraire la compilation aura lieu dans un dossier temporaire)")
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                self.on_save_as_button_clicked(Gtk.Button()) # On redirige vers la sauvegarde
+            elif response == Gtk.ResponseType.NO:
+                pass
+            dialog.destroy()
+            
         tools.Debug("Compile..")
         task = self.project.compile_latex_to_pdf()
         #GObject.idle_add(task.next)

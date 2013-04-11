@@ -68,6 +68,7 @@ class Project():
             tools.Debug("Erreur lors de la sauvegarde")
     
     def need_save(self): # Retourne vrai si le projet doit être sauvegardé
+        #return (self != self.last_copy or self.tmpFile is True)
         return self != self.last_copy
             
     def save(self):
