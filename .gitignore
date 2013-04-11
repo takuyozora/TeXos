@@ -3,5 +3,4 @@
 .settings
 test
 tests
-__pycache__
-src/__pycache__
+
