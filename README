@@ -18,5 +18,17 @@ La syntaxe de TeXos est simple, voici un petit tableau récapitulatif :
  Flasher				|| f	|| \flash
  Flasher en solo		|| s	|| \solo
  Special **				|| {**}	|| \special{**}
- Commentaire **			|| "**"	|| \comment{**} 
+ Commentaire **			|| "**"	|| \comment{**}
+ 
+Pour toutes particularités (notament les paramètres obtionnels aux fonctions), voyez le fichier tex directement.
+
+==> Compilation
+
+La compilation par l'interface de TeXos se fait via pdflatex et produit un fichier .tex qui est ensuite transformé en un .pdf du même nom.
+Si le projet n'a jamais été sauvegardé, le fichier tex et pdf se trouve dans le dossier temporaire
+
+Si une compilation dure beaucoup plus longtemps que prévus, il s'agit peut-être d'un problème bloquant.
+Il faut alors quitter l'interface de TeXos et compiler directement le fichier tex crée, en cherchant à identifier les causes du bloquage.
+
+ $ pdflatex mon_fichier.tex
  
