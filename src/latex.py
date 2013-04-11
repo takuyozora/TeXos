@@ -11,13 +11,13 @@ HEAD_LATEX = r"""
 \usepackage{lmodern}
 \usepackage[francais]{babel}
 \usepackage{array}
-\usepackage{xargs}
+\usepackage{"""+os.path.join(os.getcwd(),"tex","xargs")+r"""}
 \usepackage{tikz}
 \usepackage{"""+os.path.join(os.getcwd(),"tex","ltablex")+r"""}
-\usepackage{fancybox}
+\usepackage{"""+os.path.join(os.getcwd(),"tex","fancybox")+r"""}
 \usepackage[bottom=1cm,right=1.5cm,left=1.5cm,top=1cm]{geometry}
-\usepackage{graphicx}
-\usepackage{multirow}
+\usepackage{"""+os.path.join(os.getcwd(),"tex","graphicx")+r"""}
+\usepackage{"""+os.path.join(os.getcwd(),"tex","multirow")+r"""}
 \usepackage{nopageno}
 \usepackage{hyperref}
 
