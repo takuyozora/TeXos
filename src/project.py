@@ -196,9 +196,9 @@ class Section():
         self.bank = bank
         self.id = tools.unique_id()
         
-    def get_top(self,id):
+    def get_top(self,top_id):
         for top in self.tops:
-            if top.id == id:
+            if top.id == top_id:
                 return top
         raise NameError("ID doesn't find in the top list")
         

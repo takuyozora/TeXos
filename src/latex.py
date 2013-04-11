@@ -132,7 +132,7 @@ def transform(CHAINE):
     return result
 
 def compile_section(section,before,after):
-    dict = {"title": section.name, "bank": section.bank, "before_title": before[0], "before_bank": before[1], "after_title": after[0], "after_bank": after[1]}
+    dictionary = {"title": section.name, "bank": section.bank, "before_title": before[0], "before_bank": before[1], "after_title": after[0], "after_bank": after[1]}
     latex = r"""
 \setcounter{numTop}{1}
 \def\titre{%(title)s}
@@ -148,7 +148,7 @@ def compile_section(section,before,after):
 \keepXColumns
 \begin{center}
 \begin{tabularx}{15cm}{|c||m{7cm}|X|} \hline                                                    
- & Description du top & Action à faire  \\  \hline  \hline \endfirsthead """ % dict
+ & Description du top & Action à faire  \\  \hline  \hline \endfirsthead """ % dictionary
 
     for top in section.tops:
         latex += "\n" + compile_top(top)

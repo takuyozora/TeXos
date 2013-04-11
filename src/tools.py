@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from gi.repository import Gtk
+#from gi.repository import Gtk
 from uuid import uuid4 # Create unique ID
 
 def unique_id():
