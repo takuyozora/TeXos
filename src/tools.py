@@ -9,12 +9,13 @@ class LogLevel:
         Define the log level
     """
        
-    def __init__(self,log_level,log_name):
+    def __init__(self,log_level,log_name,log_prompt=None):
         """
             Initialize LogLevel
         """
         self.level = log_level
         self.name = log_name
+        self.prompt = log_prompt
         
     def __repr__(self):
         return self.name
@@ -28,8 +29,8 @@ MAX_LOG_LEVEL = 0
 LOG_FILE_PATH = "/tmp/log_texos.log"
 LOG_DEFAULT = LogLevel(10,"default")
 LOG_MAIN = LogLevel(20,"main")
-LOG_THREAD = LogLevel(30,"thread")
-LOG_GUI = LogLevel(30,"gui")
+LOG_THREAD = LogLevel(30,"thread",log_prompt=False)
+LOG_GUI = LogLevel(30,"gui",log_prompt=False)
 
 def unique_id():
     return int(str(uuid4().int)[:9]) ### Trouver mieux que un aléatoir tronqué à 10 ###
@@ -74,8 +75,8 @@ def log(msg,log_type=LOG_DEFAULT,class_type=None,optional_type=None):
         log_msg += "["+optional_type+"]" 
     log_msg += " "+msg    
     
-    if PROMPT_LOG:
-        print(log_msg)
+    if PROMPT_LOG and log_type.prompt is not False:
+        Debug(log_msg)
     
 #    if LOG_FILE_INIT is not True:
 #        LOG_FILE_INIT = True

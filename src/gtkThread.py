@@ -21,7 +21,7 @@ class LatexCheckThread(threading.Thread):
     def run(self):
         self.state = None
         self.end = False
-        tools.log("Starting",log_type=tools.LOG_THREAD,class_type=self,optional_type="check_top")        
+        tools.log("Starting",log_type=tools.LOG_MAIN,class_type=self)        
         name = "/tmp/"+"tmpTop.tex" ## WINDOWS : corriger le /tmp
         try:
             while True:
@@ -34,20 +34,22 @@ class LatexCheckThread(threading.Thread):
                 args = shlex.split(cmd)
                 p = subprocess.Popen(args,stdout=subprocess.PIPE)
                 while p.poll() is None:
-                    tools.log("Compiling ..",log_type=tools.LOG_THREAD,optional_type="check_top")         
+                    tools.log("Compiling ..",log_type=tools.LOG_THREAD,class_type=self)         
                     time.sleep(0.1)
                 self.state =  p.wait() == 0
-                tools.log("Compilation end : "+str(self.state),log_type=tools.LOG_THREAD,optional_type="check_top")
+                tools.log("Compilation end : "+str(self.state),log_type=tools.LOG_THREAD,class_type=self)
                 self._update_state()
         except queue.Empty:
-            tools.log("The queue is empty -> thread end",log_type=tools.LOG_THREAD,optional_type="check_top")
-            self.end = True
+            tools.log("The queue is empty -> thread end",log_type=tools.LOG_THREAD,class_type=self)
+        self.end = True
+        tools.log("Ending",log_type=tools.LOG_MAIN,class_type=self)
+        
         
     def append(self,top):
-        tools.log("An element is add to the thread",log_type=tools.LOG_THREAD,optional_type="check_top")
+        tools.log("An element is add to the thread",log_type=tools.LOG_THREAD,class_type=self)
         self.queue.put(top.get_only_top_latex())
     
     def _update_state(self):
-        tools.log("Updating the widget state",log_type=tools.LOG_THREAD,optional_type="check_top")
+        tools.log("Updating the widget state",log_type=tools.LOG_THREAD,class_type=self)
         self.widget.set_state(self.state)
         return False

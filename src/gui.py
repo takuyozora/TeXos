@@ -210,7 +210,7 @@ class ProjectPage(Gtk.VBox):
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             file = dialog.get_filename()
-            tools.Debug("File chosen : "+file)
+            tools.log("File chosen : "+file,log_type=tools.LOG_GUI,class_type=self)
             if project.load_from_file(file,test=True) is not False:
                 new = ProjectPage(on_change=self.on_change,projectFile=file)
                 self.on_change(new)
@@ -234,7 +234,7 @@ class ProjectPage(Gtk.VBox):
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             file = dialog.get_filename()
-            tools.Debug("File chosen : "+file)
+            tools.log("File chosen : "+file,log_type=tools.LOG_GUI,class_type=self)
             self.project.save_as(file)
         elif response == Gtk.ResponseType.CANCEL:
             pass
@@ -242,7 +242,7 @@ class ProjectPage(Gtk.VBox):
         dialog.destroy()
         
     def on_quit_project(self,*args):
-        tools.Debug("on quit projet ?")
+        tools.log("On quit project ?",log_type=tools.LOG_GUI,class_type=self)
         if self.project.need_save():
             dialog = Gtk.MessageDialog(self.get_ancestor(Gtk.WindowType.TOPLEVEL), 0, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, "Projet non sauvegardé")
             dialog.format_secondary_text("Le projet a été modifié depuis sa dernière sauvegarde. Voulez vous le sauvegarder avant de quitter ?")
@@ -255,7 +255,7 @@ class ProjectPage(Gtk.VBox):
             dialog.destroy()
         
     def on_menu_change(self,section):
-        tools.Debug("Change to :"+section)
+        tools.log("Change to : "+section,log_type=tools.LOG_GUI,class_type=self)
         if section == "conduite":
             self.init_conduite_menu()
         elif section == "settings":
@@ -511,7 +511,7 @@ class ConduiteMenu(Gtk.VBox):
     def on_tree_selection_change(self, select):
         model , treeiter = select.get_selected()
         if treeiter != None :
-            tools.Debug(model[ treeiter ][ 0 ] + " ID : " + str(model[ treeiter ][ 1 ]))
+            tools.log(model[ treeiter ][ 0 ] + " ID : " + str(model[ treeiter ][ 1 ]),log_type=tools.LOG_GUI,class_type=self)
             self.init_section_menu(model[ treeiter ][ 1 ])
             
     def init_section_menu(self,section):
@@ -524,13 +524,13 @@ class ConduiteMenu(Gtk.VBox):
 #        self.sectionMenu = SectionMenu(section=self.currentSection,on_change=self.on_top_change)
 #        self.topPart.add1(self.sectionMenu)
 #        self.topPart.show_all()
-        tools.Debug("Change Section")
+        tools.log("Change section",log_type=tools.LOG_GUI,class_type=self)
             
     def on_top_change(self,top=None):
         self.topPart.remove(self.topBox)
         if top is not None:
             self.topBox = TopPage(top=top,parent=self)
-        tools.Debug("FOCUS")
+        tools.log("Focus",log_type=tools.LOG_GUI,class_type=self)
         #self.topBox.grab_focus()
         self.grab_focus()
         self.topPart.add2(self.topBox)
@@ -563,7 +563,7 @@ class SectionPage(Gtk.VBox):
         self.pack_start(self.sectionGroup,True,True,0)
         
     def on_top_change(self,top):
-        tools.Debug("on_top_change, top :"+str(top))
+        tools.log("Top change to :"+str(top),log_type=tools.LOG_GUI,class_type=self)
         self.topPage.clean()
         self.topPage.__init__(self, top)
         self.parent.grab_focus()
@@ -803,7 +803,7 @@ class TopPage(Gtk.VBox):
                     widget.set_position(widget.get_position()+2) # Place le curseur après la lettre
                     return True # Arrêter le traitement de la lettre pour ne pas l'ajouter une fois de trop
                 elif key in ("parenleft","bracketleft","braceleft","quotedbl"):
-                    tools.Debug("Traitement d'un double délimiteur")
+                    tools.log("Traitement d'un double délimiteur",log_type=tools.LOG_GUI,class_type=self)
                     jumpout = True
 #                    buffer.insert_text(widget.get_position()+1,key,1)
 #                    buffer.insert_text(widget.get_position()+2,key,1)
@@ -845,7 +845,7 @@ class TopPage(Gtk.VBox):
         
     def on_entryAction_key_press_event(self,widget,event):
         key = Gdk.keyval_name(event.keyval)
-        tools.Debug(key)
+        tools.log("Key pressed :"+str(key),log_type=tools.LOG_GUI,class_type=self)
         if key == "Return":
             self.buttonRight.grab_focus()
             return False
@@ -857,7 +857,7 @@ class TopPage(Gtk.VBox):
         self.parent.sectionMenu.treeWidget.set_cursor(pos+1)
         
     def on_create_next_clicked(self,widget):
-        tools.Debug("create new")
+        tools.log("Create new top",log_type=tools.LOG_GUI,class_type=self)
         self.section.append(project.Top("Description du top"))
         self.parent.sectionMenu.update_store()
         pos = self.section.get_top_pos(self.top)
@@ -880,7 +880,7 @@ class TopPage(Gtk.VBox):
         
             
     def on_focus_entry(self,widget,arg):
-        tools.Debug("event focus")
+        tools.log("Event focus",log_type=tools.LOG_GUI,class_type=self)
 #        self.activate()
 #        self.entryTop.set_position(2)
 
