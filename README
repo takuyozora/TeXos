@@ -32,3 +32,8 @@ Il faut alors quitter l'interface de TeXos et compiler directement le fichier te
 
  $ pdflatex mon_fichier.tex
  
+ 
+==> Contact
+
+Si vous avez un problème, une question ou envie de prendre contact avec l'auteur :
+ olivier.radisson [chez] insa-lyon [point] fr 
