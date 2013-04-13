@@ -92,7 +92,10 @@ class Project():
             n_compile = 1
         
         filepath,filename = ntpath.split(self.file)
-        name = ".".join(filename.split(".")[:-1])
+        if len(filename.split(".")) > 1:
+            name = ".".join(filename.split(".")[:-1])
+        else:
+            name = filename
         absolut = path.join(filepath,name)
         with open(absolut+".tex", "w") as f:  ## Améliorer le / par un os.path
             f.write(latex)
