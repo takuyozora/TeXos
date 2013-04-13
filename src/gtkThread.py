@@ -21,11 +21,10 @@ class LatexCheckThread(threading.Thread):
     def run(self):
         self.state = None
         self.end = False
-        tools.Debug("Start thread")        
+        tools.log("Starting",log_type=tools.LOG_THREAD,class_type=self,optional_type="check_top")        
         name = "/tmp/"+"tmpTop.tex" ## WINDOWS : corriger le /tmp
         try:
             while True:
-                tools.Debug(" [thread] Boucle")
                 latex = self.queue.get(timeout=15)
                 if self.queue.empty() is not True:
                     continue
@@ -35,21 +34,20 @@ class LatexCheckThread(threading.Thread):
                 args = shlex.split(cmd)
                 p = subprocess.Popen(args,stdout=subprocess.PIPE)
                 while p.poll() is None:
-                    tools.Debug(" [thread] Currently compiling [TOP] ...")            
+                    tools.log("Compiling ..",log_type=tools.LOG_THREAD,optional_type="check_top")         
                     time.sleep(0.1)
-                tools.Debug(" [thread] Compile end [TOP] !")
                 self.state =  p.wait() == 0
-                tools.Debug(" [thread] Compile : "+str(self.state))
+                tools.log("Compilation end : "+str(self.state),log_type=tools.LOG_THREAD,optional_type="check_top")
                 self._update_state()
         except queue.Empty:
-            tools.Debug("EMPTY")
+            tools.log("The queue is empty -> thread end",log_type=tools.LOG_THREAD,optional_type="check_top")
             self.end = True
         
     def append(self,top):
-        tools.Debug("Element ajouté au thread")
+        tools.log("An element is add to the thread",log_type=tools.LOG_THREAD,optional_type="check_top")
         self.queue.put(top.get_only_top_latex())
     
     def _update_state(self):
-        tools.Debug(" [thread] UPDATE_STATE..")
+        tools.log("Updating the widget state",log_type=tools.LOG_THREAD,optional_type="check_top")
         self.widget.set_state(self.state)
         return False

@@ -59,7 +59,7 @@ class WindowTeXos(Gtk.Window):
         self.main = page
         self.box.pack_end(self.main,True,True,0)
         self.box.show_all()
-        tools.Debug("[Main window] Update Page")
+        tools.log("Update page",log_type=tools.LOG_GUI,class_type=self)
         
     def on_quit(self,*args):
         self.main.emit("delete-event",Gdk.Event(Gdk.EventType.DELETE))
@@ -185,7 +185,7 @@ class ProjectPage(Gtk.VBox):
                 pass
             dialog.destroy()
             
-        tools.Debug("Compile..")
+        tools.log("Compile from compile button",log_type=tools.LOG_GUI,class_type=self)
         task = self.project.compile_latex_to_pdf()
         #GObject.idle_add(task.next)
         dialog = Gtk.MessageDialog(Gtk.Window(), 0, Gtk.MessageType.INFO,

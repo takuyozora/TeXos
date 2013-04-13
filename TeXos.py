@@ -13,8 +13,12 @@ from os import getcwd, path
 PYTHONPATH.append(path.join(getcwd(),"src"))
 # --
 from src import gui
+from src import tools
 
 if __name__ == '__main__':
+    if tools.ACTIVE_LOG:
+        tools.init_log()
+        tools.log("Starting TeXos",tools.LOG_MAIN)
     window = gui.WindowTeXos ()
     window.show_all()
     Gtk.main()
