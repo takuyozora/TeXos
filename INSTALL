@@ -12,3 +12,7 @@ Dépendances :
 		* python3-gi
 		* texlive-base
 		* texlive-latex-extra
+
+	ArchLinux:
+		* python (>= 3.0)
+		* python-gobject
